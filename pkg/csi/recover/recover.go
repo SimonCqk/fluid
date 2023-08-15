@@ -23,11 +23,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fluid-cloudnative/fluid/pkg/common"
-	"github.com/fluid-cloudnative/fluid/pkg/utils"
-	"github.com/fluid-cloudnative/fluid/pkg/utils/dataset/volume"
-	"github.com/fluid-cloudnative/fluid/pkg/utils/kubelet"
-	"github.com/fluid-cloudnative/fluid/pkg/utils/mountinfo"
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
 	corev1 "k8s.io/api/core/v1"
@@ -38,6 +33,12 @@ import (
 	"k8s.io/utils/mount"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/manager"
+
+	"github.com/fluid-cloudnative/fluid/pkg/common"
+	"github.com/fluid-cloudnative/fluid/pkg/utils"
+	"github.com/fluid-cloudnative/fluid/pkg/utils/dataset/volume"
+	"github.com/fluid-cloudnative/fluid/pkg/utils/kubelet"
+	"github.com/fluid-cloudnative/fluid/pkg/utils/mountinfo"
 )
 
 const (
@@ -158,7 +159,7 @@ func (r FuseRecover) recover() {
 
 	for _, point := range brokenMounts {
 		glog.V(4).Infof("Get broken mount point: %v", point)
-		r.umountDuplicate(point)
+		// r.umountDuplicate(point)
 		if err := r.recoverBrokenMount(point); err != nil {
 			r.eventRecord(point, corev1.EventTypeWarning, common.FuseRecoverFailed)
 			continue
